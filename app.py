@@ -86,7 +86,7 @@ def main():
     )
 
     import warnings
-    warnings.filterwarnings("ignore", message=".*use_column_width.*")
+    warnings.filterwarnings("ignore", message=".*use_container_width.*")
     warnings.filterwarnings("ignore", category=DeprecationWarning)
     # Custom CSS for beautiful styling
     st.markdown("""
@@ -485,18 +485,18 @@ def main():
         # Real images from Karnataka tourism and cultural events
         g1, g2, g3 = st.columns(3)
         with g1:
-            st.image('static/k1.png', use_column_width=True)
+            st.image('static/k1.png', width="stretch")
         with g2:
-            st.image('static/k4.png', use_column_width=True)
+            st.image('static/k4.png', width="stretch")
         with g3:
-            st.image('static/k3.png', use_column_width=True)
+            st.image('static/k3.png', width="stretch")
         g4, g5, g6 = st.columns(3)
         with g4:
-            st.image('static/k2.png', use_column_width=True)
+            st.image('static/k2.png', width="stretch")
         with g5:
-            st.image('static/k5.png', use_column_width=True)
+            st.image('static/k5.png', width="stretch")
         with g6:
-            st.image('static/k6.png', use_column_width=True)
+            st.image('static/k6.png', width="stretch")
         # # Real images showcasing Karnataka culture and Rajyotsava celebrations
         # sample_images = [
         #     {
@@ -528,7 +528,7 @@ def main():
         # for i, img_data in enumerate(sample_images):
         #     with gallery_cols[i % 3]:
         #         try:
-        #             st.image(img_data["url"], caption=img_data["caption"], use_column_width=True)
+        #             st.image(img_data["url"], caption=img_data["caption"], width="stretch")
         #         except TypeError:
         #             # Fallback for older Streamlit versions
         #             st.image(img_data["url"], caption=img_data["caption"], width=300)
