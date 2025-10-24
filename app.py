@@ -173,7 +173,7 @@ def main():
     
     .registration-container {
         background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-        padding: 2rem;
+        padding: 1rem;
         border-radius: 15px;
         margin: 1rem 0;
         box-shadow: 0 8px 25px rgba(0,0,0,0.15);
@@ -664,10 +664,7 @@ def main():
         # Simple Registration Form
         st.markdown("""
         <div class="registration-container">
-            <h3 style="text-align: center; margin-bottom: 0.5rem;">📝 Event Registration</h3>
-       <p style="font-size: 1.2em; text-align: center; >
-            Contact Us : emirateskannadigaru@gmail.com
-        </p>
+            <h3 style="text-align: center; margin-bottom: 1rem;">📝 Event Registration</h3>
         </div>
         """, unsafe_allow_html=True)
         
@@ -705,7 +702,7 @@ def main():
             
             # Submit Button
             submitted = st.form_submit_button("🎉 Register Now")
-            
+            st.markdown("""Contact Us : emirateskannadigaru@gmail.com for any information.""")
             if submitted:
                 if not all([name, phone]) or not main_consent:
                     st.error("❌ Please fill all fields and accept both agreements.")
