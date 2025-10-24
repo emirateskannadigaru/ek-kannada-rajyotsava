@@ -20,10 +20,11 @@ def send_email(name, email, phone, family_members, special_requirements):
             try:
                 sender_email = st.secrets["GMAIL_USER"]
                 sender_password = st.secrets["GMAIL_PASSWORD"]
-            except:
+            except Exception as e:
+                print(e)
                 # Fallback to environment variables
-                sender_email = os.getenv("GMAIL_USER", "")
-                sender_password = os.getenv("GMAIL_PASSWORD", "")
+                sender_email = "emirateskannadigaru@gmail.com"
+                sender_password = "sicyfifhuudhbkvl"
         
         if not sender_email or not sender_password:
             st.warning("⚠️ Email configuration not found. Registration data saved locally.")
@@ -312,6 +313,7 @@ def main():
     <div class="header-container">
         <h1>🎉 ಕನ್ನಡ ರಾಜ್ಯೋತ್ಸವ 2025 🎉</h1>
         <h2>Kannada Rajyotsava Celebration</h2>
+        <h4>15th November 2025 || Jabeel Park || 10 AM to 4 PM</h4>
         <h3>EK Employees & Families Special Event</h3>
         <p style="font-size: 1.2em; margin-top: 1rem;">
             Join us for a memorable celebration of Karnataka's rich heritage and culture!
@@ -348,8 +350,8 @@ def main():
         with col2:
             st.markdown("#### Quick Event Info")
             st.metric("Event Date", "Nov 15, 2025", "Special Day")
-            st.metric("Duration", "6 Hours", "10 AM - 4 PM")
-            st.metric("Expected Attendees", "200+", "Families Welcome")
+            st.metric("Day", "Saturday", "10 AM - 4 PM")
+            # st.metric("Expected Attendees", "200+", "Families Welcome")
             st.metric("Venue", "Jabeel Park", "Beautiful Location")
         
         # Call to Action for Registration
@@ -442,18 +444,17 @@ def main():
         with col1:
             st.markdown("""
             #### 🚗 Transportation
-            - Free shuttle service from office
-            - Parking available at venue
+            - Own transportation and park at Jabeel Park
+            - Metro access 
             - Carpooling encouraged
             """)
         
         with col2:
             st.markdown("""
             #### 🍽️ Food & Refreshments
-            - Traditional Karnataka breakfast
-            - Authentic lunch buffet
+            - Traditional Karnataka snacks
+            - Authentic lunch 
             - Evening snacks & tea
-            - Special dietary options available
             """)
         
         with col3:
@@ -467,8 +468,8 @@ def main():
     
     # GALLERY TAB
     with tab3:
-        st.markdown("### 📸 Event Gallery")
-        st.markdown("*Memories from previous Kannada Rajyotsava celebrations and Karnataka cultural heritage*")
+        # st.markdown("### 📸 Event Gallery")
+        # st.markdown("*Memories from previous Kannada Rajyotsava celebrations and Karnataka cultural heritage*")
         
         # Image Gallery Section
         st.markdown("""
@@ -479,44 +480,56 @@ def main():
         """, unsafe_allow_html=True)
         
         # Real images from Karnataka tourism and cultural events
-        gallery_cols = st.columns(3)
-        
-        # Real images showcasing Karnataka culture and Rajyotsava celebrations
-        sample_images = [
-            {
-                "url": "https://karnatakatourism.org/wp-content/uploads/2020/06/Kannada-dance.jpg",
-                "caption": "Traditional Kannada Dance Performance"
-            },
-            {
-                "url": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=200&fit=crop",
-                "caption": "Kids Cultural Show"
-            },
-            {
-                "url": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=300&h=200&fit=crop",
-                "caption": "Group Traditional Games"
-            },
-            {
-                "url": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=200&fit=crop",
-                "caption": "Karnataka Folk Art"
-            },
-            {
-                "url": "https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=300&h=200&fit=crop",
-                "caption": "Family Celebration"
-            },
-            {
-                "url": "https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=300&h=200&fit=crop",
-                "caption": "Cultural Heritage Display"
-            }
-        ]
-        
-        for i, img_data in enumerate(sample_images):
-            with gallery_cols[i % 3]:
-                try:
-                    st.image(img_data["url"], caption=img_data["caption"], use_column_width=True)
-                except TypeError:
-                    # Fallback for older Streamlit versions
-                    st.image(img_data["url"], caption=img_data["caption"], width=300)
-        
+        g1, g2, g3 = st.columns(3)
+        with g1:
+            st.image('static/k1.png', use_column_width=True)
+        with g2:
+            st.image('static/k4.png', use_column_width=True)
+        with g3:
+            st.image('static/k3.png', use_column_width=True)
+        g4, g5, g6 = st.columns(3)
+        with g4:
+            st.image('static/k2.png', use_column_width=True)
+        with g5:
+            st.image('static/k5.png', use_column_width=True)
+        with g6:
+            st.image('static/k6.png', use_column_width=True)
+        # # Real images showcasing Karnataka culture and Rajyotsava celebrations
+        # sample_images = [
+        #     {
+        #         "url": "https://karnatakatourism.org/wp-content/uploads/2020/06/Kannada-dance.jpg",
+        #         "caption": "Traditional Kannada Dance Performance"
+        #     },
+        #     {
+        #         "url": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=200&fit=crop",
+        #         "caption": "Kids Cultural Show"
+        #     },
+        #     {
+        #         "url": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=300&h=200&fit=crop",
+        #         "caption": "Group Traditional Games"
+        #     },
+        #     {
+        #         "url": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=200&fit=crop",
+        #         "caption": "Karnataka Folk Art"
+        #     },
+        #     {
+        #         "url": "https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=300&h=200&fit=crop",
+        #         "caption": "Family Celebration"
+        #     },
+        #     {
+        #         "url": "https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=300&h=200&fit=crop",
+        #         "caption": "Cultural Heritage Display"
+        #     }
+        # ]
+        #
+        # for i, img_data in enumerate(sample_images):
+        #     with gallery_cols[i % 3]:
+        #         try:
+        #             st.image(img_data["url"], caption=img_data["caption"], use_column_width=True)
+        #         except TypeError:
+        #             # Fallback for older Streamlit versions
+        #             st.image(img_data["url"], caption=img_data["caption"], width=300)
+        #
         # YouTube Videos Section
         st.markdown("---")
         st.markdown("""
@@ -531,12 +544,12 @@ def main():
         with video_cols[0]:
             st.subheader("🎭 Karnataka Cultural Heritage")
             st.write("Traditional Kannada Folk Dance Performance")
-            st.video("https://www.youtube.com/watch?v=ScMzIvxBSi4")  # Yakshagana performance
+            st.video("https://www.youtube.com/watch?v=CC3TVtrgGno")  # Yakshagana performance
             
         with video_cols[1]:
             st.subheader("🏛️ Kannada Rajyotsava Celebration")
             st.write("Karnataka Formation Day Celebrations")
-            st.video("https://www.youtube.com/watch?v=0sw54Pdh_m8")  # Karnataka Rajyotsava
+            st.video("https://www.youtube.com/watch?v=m2pLKwlops4&list=RDQMHStdR16om0o&start_radio=1")  # Karnataka Rajyotsava
         
         # Additional cultural videos section
         st.markdown("### 🎵 More Cultural Videos")
@@ -545,15 +558,15 @@ def main():
         
         with additional_videos[0]:
             st.write("**State Anthem**")
-            st.video("https://www.youtube.com/watch?v=6FOUqQt3Kg0")  # Jaya Bharata Jananiya Tanujate
+            st.video("https://www.youtube.com/watch?v=7iLvW-UYmsg")  # Jaya Bharata Jananiya Tanujate
         
         with additional_videos[1]:
             st.write("**Traditional Folk Music**")
-            st.video("https://www.youtube.com/watch?v=VT6vNvWE8xQ")  # Karnataka folk music
+            st.video("https://www.youtube.com/watch?v=iV4CUBQIH0M")  # Karnataka folk music
             
         with additional_videos[2]:
             st.write("**Karnataka Tourism**")
-            st.video("https://www.youtube.com/watch?v=oTFrwrz4ZKo")  # Karnataka tourism highlights
+            st.video("https://www.youtube.com/watch?v=UB2Tbi_h_lw")  # Karnataka tourism highlights
     
     # HISTORY TAB
     with tab4:
@@ -660,7 +673,7 @@ def main():
             with col1:
                 name = st.text_input("Full Name *", placeholder="Enter your full name")
             with col2:
-                phone = st.text_input("Phone Number *", placeholder="+91 XXXXX XXXXX")
+                phone = st.text_input("Phone Number *", placeholder="+XXX XXXXX XXXXX")
             
             # Total attendees question in same line
             col1, col2, col3 = st.columns([4, 2, 2])
@@ -671,11 +684,12 @@ def main():
             with col3:
                 children = st.number_input("Children (under 12)", min_value=0, max_value=5, value=0)
 
-            
-
-            kids_talent_show = st.radio("Will your kids participate in Kid's Talent Show?",
-                                          ["Yes", "No", "Not Applicable"], horizontal=True)
-
+            colA, colB = st.columns(2)
+            with colA:
+                kids_talent_show = st.radio("Will your kids participate in Kid's Talent Show?",
+                                              ["Yes", "No", "Not Applicable"], horizontal=True)
+            with colB:
+                email = st.text_input("Email Address", placeholder="Enter your email address")
             # Compact consent section
             consent_text = f"I voluntarily agree to attend with {(int(adults)+int(children))} total people and consent to images/videos for social media use."
             main_consent = st.checkbox(consent_text)
@@ -698,7 +712,8 @@ def main():
                             'children': children,
                             'total_attendees': adults+children,
                             'kids_talent_show': kids_talent_show,
-                            'main_consent': main_consent
+                            'main_consent': main_consent,
+                            'email': email
                         }
                         
                         if send_email_simplified(registration_data):
@@ -778,7 +793,14 @@ def send_email_simplified(registration_data):
         server.starttls()
         server.login(sender_email, sender_password)
         text = msg.as_string()
-        server.sendmail(sender_email, sender_email, text)
+        try:
+            if registration_data['email']:
+                server.sendmail(sender_email, [sender_email, registration_data['email']], text)
+                server.sendmail(sender_email, sender_email, text)
+            else:
+                server.sendmail(sender_email, sender_email, text)
+        except Exception as e:
+            server.sendmail(sender_email, sender_email, text)
         server.quit()
         
         return True
