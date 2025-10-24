@@ -665,6 +665,9 @@ def main():
         st.markdown("""
         <div class="registration-container">
             <h3 style="text-align: center; margin-bottom: 1.5rem;">📝 Event Registration</h3>
+       <p style="font-size: 1.2em; margin-top: 1rem;">
+            Contact Us : emirateskannadigaru@gmail.com
+        </p>
         </div>
         """, unsafe_allow_html=True)
         
