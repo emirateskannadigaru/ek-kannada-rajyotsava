@@ -87,7 +87,7 @@ def main():
 
     import warnings
     warnings.filterwarnings("ignore", message=".*use_column_width.*")
-    
+    warnings.filterwarnings("ignore", category=DeprecationWarning)
     # Custom CSS for beautiful styling
     st.markdown("""
     <style>
