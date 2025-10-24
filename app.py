@@ -84,6 +84,9 @@ def main():
         layout="wide",
         initial_sidebar_state="collapsed"
     )
+
+    import warnings
+    warnings.filterwarnings("ignore", message=".*use_column_width.*")
     
     # Custom CSS for beautiful styling
     st.markdown("""
