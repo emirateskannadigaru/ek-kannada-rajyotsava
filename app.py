@@ -98,7 +98,7 @@ def main():
 
     # Taking inputs
     email_sender = "emirateskannadigaru@gmail.com"
-    email_receiver = 'javaindubai@gmail.com,emirateskannadigaru@gmail.com'
+    email_receiver = 'javaindubai@gmail.com'
     subject = st.text_input('Subject')
     body = st.text_area('Body')
 
