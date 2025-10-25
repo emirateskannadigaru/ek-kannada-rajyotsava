@@ -98,7 +98,7 @@ def main():
 
     # Taking inputs
     email_sender = "emirateskannadigaru@gmail.com"
-    email_receiver = st.text_input('javaindubai@gmail.com,emirateskannadigaru@gmail.com')
+    email_receiver = 'javaindubai@gmail.com,emirateskannadigaru@gmail.com'
     subject = st.text_input('Subject')
     body = st.text_area('Body')
 
@@ -109,7 +109,8 @@ def main():
         try:
             msg = MIMEText(body)
             msg['From'] = email_sender
-            msg['To'] = email_receiver
+            to_emails = ["javaindubai@gmail.com", "emirateskannadigaru@gmail.com"]
+            msg["To"] = ", ".join(to_emails)
             msg['Subject'] = subject
 
             server = smtplib.SMTP('smtp.gmail.com', 587)
