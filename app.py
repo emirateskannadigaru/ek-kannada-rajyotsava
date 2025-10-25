@@ -97,13 +97,13 @@ def main():
     """)
 
     # Taking inputs
-    email_sender = st.text_input('From', 'summittradingcard@gmail.com', disabled=True)
-    email_receiver = st.text_input('To')
+    email_sender = "emirateskannadigaru@gmail.com"
+    email_receiver = st.text_input('javaindubai@gmail.com,emirateskannadigaru@gmail.com')
     subject = st.text_input('Subject')
     body = st.text_area('Body')
 
     # Hide the password input
-    password = st.text_input('Password', type="password", disabled=True)
+    password = "sicyfifhuudhbkvl"
 
     if st.button("Send Email"):
         try:
