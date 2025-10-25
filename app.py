@@ -387,7 +387,7 @@ def main():
                     </div>
                     """, unsafe_allow_html=True)
 
-            with st.form("registration_form"):
+            with st.form("registration_form-home"):
                 # st.markdown('<div class="form-section">', unsafe_allow_html=True)
 
                 # All questions in compact layout
