@@ -87,17 +87,45 @@ def main():
         layout="wide",
         initial_sidebar_state="collapsed"
     )
+    hide_streamlit_style = """
+        <style>
+            #MainMenu {visibility: hidden;}
+            header {visibility: hidden;}
+            footer {visibility: hidden;}
+            .st-emotion-cache-t1wise {
+                padding: 0rem 20rem 1rem;
+                }
+             .st-emotion-cache-b499ls {
+            padding: 0rem 20rem 1rem;
+                } 
+                
+                .st-emotion-cache-zy6yx3 {
+            padding: 0rem 5rem 1rem;
+                } 
+        </style>
+    """
+    st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
+    hide_streamlit_style = """
+                    <style>
+                    .navbar-toggler {
+                        'background-color': '#526d94 !important';
+                    }
+
+                    .text-white {
+                        'background-color': '#526d94 !important';
+                    }
+                    .st-emotion-cache-rrm7oe {
+                      text-decoration: underline;
+                    }
+
+                    </style>
+                    """
+    st.markdown(hide_streamlit_style, unsafe_allow_html=True)
     import warnings
     warnings.filterwarnings("ignore", message=".*use_container_width.*")
     warnings.filterwarnings("ignore", category=DeprecationWarning)
     # Custom CSS for beautiful styling
-
-    # st.title('Send Streamlit SMTP Email 💌 🚀')
-
-    st.markdown("""
-    **Enter your email, subject, and email body then hit send to receive an email from `summittradingcard@gmail.com`!**
-    """)
     st.markdown("""
     <style>
     .main {
@@ -369,7 +397,6 @@ def main():
         # Call to Action for Registration
         st.markdown("---")
         st.markdown("### 🎯 Ready to Join Us?")
-
         with st.form("registration_form-home"):
                 # st.markdown('<div class="form-section">', unsafe_allow_html=True)
 
@@ -524,7 +551,64 @@ def main():
             - Photo booth with props
             - Cultural activity workshops
             """)
-    
+        st.markdown("### 🎯 Ready to Join Us?")
+        with st.form("registration_form-event"):
+            # st.markdown('<div class="form-section">', unsafe_allow_html=True)
+
+            # All questions in compact layout
+            col1, col2 = st.columns(2)
+            with col1:
+                name = st.text_input("Full Name *", placeholder="Enter your full name")
+            with col2:
+                phone = st.text_input("Phone Number *", placeholder="+XXX XXXXX XXXXX")
+
+            # Total attendees question in same line
+            col1, col2, col3 = st.columns([4, 2, 2])
+            with col1:
+                st.markdown("**Total Number of People Attending (including yourself and family):**")
+            with col2:
+                adults = st.number_input("Adults (12+ years)", min_value=0, max_value=5, value=0)
+            with col3:
+                children = st.number_input("Children (under 12)", min_value=0, max_value=5, value=0)
+
+            colA, colB = st.columns(2)
+            with colA:
+                kids_talent_show = st.radio("Will your kids participate in Kid's Talent Show?",
+                                            ["Yes", "No", "Not Applicable"], horizontal=True)
+            with colB:
+                email = st.text_input("Email Address", placeholder="Enter your email address")
+            # Compact consent section
+            consent_text = f"I voluntarily agree to attend with {(int(adults) + int(children))} total people and consent to images/videos for social media use."
+            main_consent = st.checkbox(consent_text)
+
+            st.markdown('</div>', unsafe_allow_html=True)
+
+            # Submit Button
+            submitted = st.form_submit_button("🎉 Register Now")
+            st.markdown("""Contact Us : emirateskannadigaru@gmail.com for any information.""")
+            if submitted:
+                if not all([name, phone]) or not main_consent:
+                    st.error("❌ Please fill all fields and accept both agreements.")
+                else:
+                    with st.spinner("Processing..."):
+                        registration_data = {
+                            'name': name,
+                            'phone': phone,
+                            'adults': adults,
+                            'children': children,
+                            'total_attendees': adults + children,
+                            'kids_talent_show': kids_talent_show,
+                            'main_consent': main_consent,
+                            'email': email
+                        }
+
+                        if send_email_simplified(registration_data):
+                            st.success(f"🎉 Registration successful! Welcome {name}!")
+                            st.balloons()
+                            st.info(
+                                f"**Registered:** {name} | **Phone:** {phone} | **Total:** {adults + children} people | **Kids Show:** {kids_talent_show}")
+                        else:
+                            st.error("❌ Registration failed. Please try again.")
     # GALLERY TAB
     with tab3:
         # st.markdown("### 📸 Event Gallery")
@@ -553,42 +637,6 @@ def main():
             st.image('static/k5.png', width="stretch")
         with g6:
             st.image('static/k6.png', width="stretch")
-        # # Real images showcasing Karnataka culture and Rajyotsava celebrations
-        # sample_images = [
-        #     {
-        #         "url": "https://karnatakatourism.org/wp-content/uploads/2020/06/Kannada-dance.jpg",
-        #         "caption": "Traditional Kannada Dance Performance"
-        #     },
-        #     {
-        #         "url": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=300&h=200&fit=crop",
-        #         "caption": "Kids Cultural Show"
-        #     },
-        #     {
-        #         "url": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=300&h=200&fit=crop",
-        #         "caption": "Group Traditional Games"
-        #     },
-        #     {
-        #         "url": "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=300&h=200&fit=crop",
-        #         "caption": "Karnataka Folk Art"
-        #     },
-        #     {
-        #         "url": "https://images.unsplash.com/photo-1566478989037-eec170784d0b?w=300&h=200&fit=crop",
-        #         "caption": "Family Celebration"
-        #     },
-        #     {
-        #         "url": "https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=300&h=200&fit=crop",
-        #         "caption": "Cultural Heritage Display"
-        #     }
-        # ]
-        #
-        # for i, img_data in enumerate(sample_images):
-        #     with gallery_cols[i % 3]:
-        #         try:
-        #             st.image(img_data["url"], caption=img_data["caption"], width="stretch")
-        #         except TypeError:
-        #             # Fallback for older Streamlit versions
-        #             st.image(img_data["url"], caption=img_data["caption"], width=300)
-        #
         # YouTube Videos Section
         st.markdown("---")
         st.markdown("""
@@ -602,12 +650,12 @@ def main():
         
         with video_cols[0]:
             st.subheader("🎭 Karnataka Cultural Heritage")
-            st.write("Traditional Kannada Folk Dance Performance")
+            st.write("Karnataka Rajyotsava")
             st.video("https://www.youtube.com/watch?v=CC3TVtrgGno")  # Yakshagana performance
             
         with video_cols[1]:
             st.subheader("🏛️ Kannada Rajyotsava Celebration")
-            st.write("Karnataka Formation Day Celebrations")
+            st.write("Karnataka Rajyotsava")
             st.video("https://www.youtube.com/watch?v=m2pLKwlops4&list=RDQMHStdR16om0o&start_radio=1")  # Karnataka Rajyotsava
         
         # Additional cultural videos section
@@ -626,7 +674,64 @@ def main():
         with additional_videos[2]:
             st.write("**Karnataka Tourism**")
             st.video("https://www.youtube.com/watch?v=UB2Tbi_h_lw")  # Karnataka tourism highlights
-    
+        st.markdown("### 🎯 Ready to Join Us?")
+        with st.form("registration_form-gallery"):
+            # st.markdown('<div class="form-section">', unsafe_allow_html=True)
+
+            # All questions in compact layout
+            col1, col2 = st.columns(2)
+            with col1:
+                name = st.text_input("Full Name *", placeholder="Enter your full name")
+            with col2:
+                phone = st.text_input("Phone Number *", placeholder="+XXX XXXXX XXXXX")
+
+            # Total attendees question in same line
+            col1, col2, col3 = st.columns([4, 2, 2])
+            with col1:
+                st.markdown("**Total Number of People Attending (including yourself and family):**")
+            with col2:
+                adults = st.number_input("Adults (12+ years)", min_value=0, max_value=5, value=0)
+            with col3:
+                children = st.number_input("Children (under 12)", min_value=0, max_value=5, value=0)
+
+            colA, colB = st.columns(2)
+            with colA:
+                kids_talent_show = st.radio("Will your kids participate in Kid's Talent Show?",
+                                            ["Yes", "No", "Not Applicable"], horizontal=True)
+            with colB:
+                email = st.text_input("Email Address", placeholder="Enter your email address")
+            # Compact consent section
+            consent_text = f"I voluntarily agree to attend with {(int(adults) + int(children))} total people and consent to images/videos for social media use."
+            main_consent = st.checkbox(consent_text)
+
+            st.markdown('</div>', unsafe_allow_html=True)
+
+            # Submit Button
+            submitted = st.form_submit_button("🎉 Register Now")
+            st.markdown("""Contact Us : emirateskannadigaru@gmail.com for any information.""")
+            if submitted:
+                if not all([name, phone]) or not main_consent:
+                    st.error("❌ Please fill all fields and accept both agreements.")
+                else:
+                    with st.spinner("Processing..."):
+                        registration_data = {
+                            'name': name,
+                            'phone': phone,
+                            'adults': adults,
+                            'children': children,
+                            'total_attendees': adults + children,
+                            'kids_talent_show': kids_talent_show,
+                            'main_consent': main_consent,
+                            'email': email
+                        }
+
+                        if send_email_simplified(registration_data):
+                            st.success(f"🎉 Registration successful! Welcome {name}!")
+                            st.balloons()
+                            st.info(
+                                f"**Registered:** {name} | **Phone:** {phone} | **Total:** {adults + children} people | **Kids Show:** {kids_talent_show}")
+                        else:
+                            st.error("❌ Registration failed. Please try again.")
     # HISTORY TAB
     with tab4:
         st.markdown("### 🏛️ Kannada Rajyotsava History & Significance")
@@ -714,7 +819,64 @@ def main():
             - Significant contributions to science and technology
             - Vibrant cultural festivals and celebrations
             """)
-    
+        st.markdown("### 🎯 Ready to Join Us?")
+        with st.form("registration_form-history"):
+            # st.markdown('<div class="form-section">', unsafe_allow_html=True)
+
+            # All questions in compact layout
+            col1, col2 = st.columns(2)
+            with col1:
+                name = st.text_input("Full Name *", placeholder="Enter your full name")
+            with col2:
+                phone = st.text_input("Phone Number *", placeholder="+XXX XXXXX XXXXX")
+
+            # Total attendees question in same line
+            col1, col2, col3 = st.columns([4, 2, 2])
+            with col1:
+                st.markdown("**Total Number of People Attending (including yourself and family):**")
+            with col2:
+                adults = st.number_input("Adults (12+ years)", min_value=0, max_value=5, value=0)
+            with col3:
+                children = st.number_input("Children (under 12)", min_value=0, max_value=5, value=0)
+
+            colA, colB = st.columns(2)
+            with colA:
+                kids_talent_show = st.radio("Will your kids participate in Kid's Talent Show?",
+                                            ["Yes", "No", "Not Applicable"], horizontal=True)
+            with colB:
+                email = st.text_input("Email Address", placeholder="Enter your email address")
+            # Compact consent section
+            consent_text = f"I voluntarily agree to attend with {(int(adults) + int(children))} total people and consent to images/videos for social media use."
+            main_consent = st.checkbox(consent_text)
+
+            st.markdown('</div>', unsafe_allow_html=True)
+
+            # Submit Button
+            submitted = st.form_submit_button("🎉 Register Now")
+            st.markdown("""Contact Us : emirateskannadigaru@gmail.com for any information.""")
+            if submitted:
+                if not all([name, phone]) or not main_consent:
+                    st.error("❌ Please fill all fields and accept both agreements.")
+                else:
+                    with st.spinner("Processing..."):
+                        registration_data = {
+                            'name': name,
+                            'phone': phone,
+                            'adults': adults,
+                            'children': children,
+                            'total_attendees': adults + children,
+                            'kids_talent_show': kids_talent_show,
+                            'main_consent': main_consent,
+                            'email': email
+                        }
+
+                        if send_email_simplified(registration_data):
+                            st.success(f"🎉 Registration successful! Welcome {name}!")
+                            st.balloons()
+                            st.info(
+                                f"**Registered:** {name} | **Phone:** {phone} | **Total:** {adults + children} people | **Kids Show:** {kids_talent_show}")
+                        else:
+                            st.error("❌ Registration failed. Please try again.")
     # REGISTER TAB
     with tab5:
         # Simple Registration Form

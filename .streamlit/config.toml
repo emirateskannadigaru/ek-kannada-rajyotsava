@@ -1,2 +1,18 @@
+[theme]
+base="light"                     # options: "light" or "dark" # corporate blue-green tone
+backgroundColor="#ffffff"        # clean white background
+secondaryBackgroundColor="#e0fbcc" # light cyan for secondary elements
+textColor="#000000"              # black text for good readability
+font="sans serif"                # options: "sans serif", "serif", or "monospace"
+
 [server]
 enableStaticServing=true
+enableXsrfProtection=false
+enableCORS=false
+headless=true
+
+[client]
+toolbarMode = "minimal"          # hides "View fullscreen" etc. options
+
+[logger]
+level="error"
