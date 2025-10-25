@@ -114,7 +114,7 @@ def main():
 
             server = smtplib.SMTP('smtp.gmail.com', 587)
             server.starttls()
-            server.login(st.secrets["email"]["gmail"], st.secrets["email"]["password"])
+            server.login(email_sender, password)
             server.sendmail(email_sender, email_receiver, msg.as_string())
             server.quit()
 
