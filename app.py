@@ -109,7 +109,7 @@ def main():
         try:
             msg = MIMEText(body)
             msg['From'] = email_sender
-            to_emails = ["javaindubai@gmail.com", "emirateskannadigaru@gmail.com"]
+            to_emails = ["javaindubai@gmail.com"]
             msg["To"] = ", ".join(to_emails)
             msg['Subject'] = subject
 
