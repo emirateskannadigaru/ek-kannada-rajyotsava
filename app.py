@@ -35,11 +35,14 @@ def send_email(name, email, phone, family_members, special_requirements):
                 f.write(f"Family Members: {family_members}\nSpecial Requirements: {special_requirements}\n")
                 f.write("-" * 50 + "\n")
             return True
-        
+        to_email = sender_email
+        if email:
+            to_email = email
         # Create message
         msg = MIMEMultipart()
         msg['From'] = sender_email
-        msg['To'] = sender_email  # Send to yourself
+        msg['To'] = to_email  # Send to yourself
+        msg["Cc"] = sender_email
         msg['Subject'] = f"Kannada Rajyotsava Registration - {name}"
         
         # Email body
@@ -95,33 +98,6 @@ def main():
     st.markdown("""
     **Enter your email, subject, and email body then hit send to receive an email from `summittradingcard@gmail.com`!**
     """)
-
-    # Taking inputs
-    email_sender = "emirateskannadigaru@gmail.com"
-    email_receiver = 'javaindubai@gmail.com'
-    subject = st.text_input('Subject')
-    body = st.text_area('Body')
-
-    # Hide the password input
-    password = "sicyfifhuudhbkvl"
-
-    if st.button("Send Email"):
-        try:
-            msg = MIMEText(body)
-            msg['From'] = email_sender
-            to_emails = ["javaindubai@gmail.com"]
-            msg["To"] = ", ".join(to_emails)
-            msg['Subject'] = subject
-
-            server = smtplib.SMTP('smtp.gmail.com', 587)
-            server.starttls()
-            server.login(email_sender, password)
-            server.sendmail(email_sender, email_receiver, msg.as_string())
-            server.quit()
-
-            st.success('Email sent successfully! 🚀')
-        except Exception as e:
-            st.error(f"Failed to send email: {e}")
     st.markdown("""
     <style>
     .main {
@@ -404,6 +380,70 @@ def main():
                 <p><strong>Click on the "📝 Register" tab above to complete your registration!</strong></p>
             </div>
             """, unsafe_allow_html=True)
+
+            st.markdown("""
+                    <div class="registration-container">
+                        <h3 style="text-align: center; margin-bottom: 1rem;">📝 Event Registration</h3>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+            with st.form("registration_form"):
+                # st.markdown('<div class="form-section">', unsafe_allow_html=True)
+
+                # All questions in compact layout
+                col1, col2 = st.columns(2)
+                with col1:
+                    name = st.text_input("Full Name *", placeholder="Enter your full name")
+                with col2:
+                    phone = st.text_input("Phone Number *", placeholder="+XXX XXXXX XXXXX")
+
+                # Total attendees question in same line
+                col1, col2, col3 = st.columns([4, 2, 2])
+                with col1:
+                    st.markdown("**Total Number of People Attending (including yourself and family):**")
+                with col2:
+                    adults = st.number_input("Adults (12+ years)", min_value=0, max_value=5, value=0)
+                with col3:
+                    children = st.number_input("Children (under 12)", min_value=0, max_value=5, value=0)
+
+                colA, colB = st.columns(2)
+                with colA:
+                    kids_talent_show = st.radio("Will your kids participate in Kid's Talent Show?",
+                                                ["Yes", "No", "Not Applicable"], horizontal=True)
+                with colB:
+                    email = st.text_input("Email Address", placeholder="Enter your email address")
+                # Compact consent section
+                consent_text = f"I voluntarily agree to attend with {(int(adults) + int(children))} total people and consent to images/videos for social media use."
+                main_consent = st.checkbox(consent_text)
+
+                st.markdown('</div>', unsafe_allow_html=True)
+
+                # Submit Button
+                submitted = st.form_submit_button("🎉 Register Now")
+                st.markdown("""Contact Us : emirateskannadigaru@gmail.com for any information.""")
+                if submitted:
+                    if not all([name, phone]) or not main_consent:
+                        st.error("❌ Please fill all fields and accept both agreements.")
+                    else:
+                        with st.spinner("Processing..."):
+                            registration_data = {
+                                'name': name,
+                                'phone': phone,
+                                'adults': adults,
+                                'children': children,
+                                'total_attendees': adults + children,
+                                'kids_talent_show': kids_talent_show,
+                                'main_consent': main_consent,
+                                'email': email
+                            }
+
+                            if send_email_simplified(registration_data):
+                                st.success(f"🎉 Registration successful! Welcome {name}!")
+                                st.balloons()
+                                st.info(
+                                    f"**Registered:** {name} | **Phone:** {phone} | **Total:** {adults + children} people | **Kids Show:** {kids_talent_show}")
+                            else:
+                                st.error("❌ Registration failed. Please try again.")
     
     # EVENT TAB
     with tab2:
@@ -762,6 +802,10 @@ def main():
 def send_email_simplified(registration_data):
     """Simplified email function for new registration form"""
     try:
+        # Email configuration - you'll need to set these in Streamlit secrets
+        smtp_server = "smtp.gmail.com"
+        smtp_port = 587
+
         # Try different ways to access secrets
         try:
             sender_email = st.secrets["gmail"]["GMAIL_USER"]
@@ -770,10 +814,11 @@ def send_email_simplified(registration_data):
             try:
                 sender_email = st.secrets["GMAIL_USER"]
                 sender_password = st.secrets["GMAIL_PASSWORD"]
-            except:
+            except Exception as e:
+                print(e)
                 # Fallback to environment variables
-                sender_email = os.getenv("GMAIL_USER", "")
-                sender_password = os.getenv("GMAIL_PASSWORD", "")
+                sender_email = "emirateskannadigaru@gmail.com"
+                sender_password = "sicyfifhuudhbkvl"
         
         if not sender_email or not sender_password:
             # Save to local file as backup
@@ -788,11 +833,15 @@ def send_email_simplified(registration_data):
                 f.write(f"Consents: Main={registration_data['main_consent']}\n")
                 f.write("-" * 50 + "\n")
             return True
-        
-        # Create email
+        email = registration_data['email']
+        to_email = sender_email
+        if email:
+            to_email = email
+        # Create message
         msg = MIMEMultipart()
         msg['From'] = sender_email
-        msg['To'] = sender_email
+        msg['To'] = to_email  # Send to yourself
+        msg["Cc"] = sender_email
         msg['Subject'] = f"Kannada Rajyotsava 2025 Registration - {registration_data['name']}"
         
         # Simplified email body
@@ -830,17 +879,13 @@ def send_email_simplified(registration_data):
         server.login(sender_email, sender_password)
         text = msg.as_string()
         try:
-            if registration_data['email']:
-                server.sendmail(sender_email, [sender_email, registration_data['email']], text)
-                server.sendmail(sender_email, sender_email, text)
-            else:
-                server.sendmail(sender_email, sender_email, text)
+            server.sendmail(sender_email, to_email, text)
         except Exception as e:
             server.sendmail(sender_email, sender_email, text)
         server.quit()
-        
         return True
     except Exception as e:
+        print("Error:", str(e))
         st.error(f"Failed to send email: {str(e)}")
         return False
 
