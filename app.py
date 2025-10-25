@@ -369,25 +369,8 @@ def main():
         # Call to Action for Registration
         st.markdown("---")
         st.markdown("### 🎯 Ready to Join Us?")
-        
-        col1, col2, col3 = st.columns([1, 2, 1])
-        with col2:
-            st.markdown("""
-            <div style="text-align: center; padding: 2rem; background: linear-gradient(45deg, #4facfe, #00f2fe); 
-                        border-radius: 15px; color: white; box-shadow: 0 8px 25px rgba(0,0,0,0.15);">
-                <h4>🎉 Don't Miss Out!</h4>
-                <p>Secure your spot at this exclusive celebration of Karnataka's heritage.</p>
-                <p><strong>Click on the "📝 Register" tab above to complete your registration!</strong></p>
-            </div>
-            """, unsafe_allow_html=True)
 
-            st.markdown("""
-                    <div class="registration-container">
-                        <h3 style="text-align: center; margin-bottom: 1rem;">📝 Event Registration</h3>
-                    </div>
-                    """, unsafe_allow_html=True)
-
-            with st.form("registration_form-home"):
+        with st.form("registration_form-home"):
                 # st.markdown('<div class="form-section">', unsafe_allow_html=True)
 
                 # All questions in compact layout
