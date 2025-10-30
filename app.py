@@ -1021,7 +1021,7 @@ def main():
                         else:
                             st.error("❌ Registration failed. Please try again.")
         st.markdown("----")
-        st.image('static/k7.png', width="stretch")
+        st.image('static/k8.png', width="stretch")
 def send_email_simplified(registration_data):
     """Simplified email function for new registration form"""
     try:
