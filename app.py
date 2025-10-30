@@ -1021,7 +1021,9 @@ def main():
                         else:
                             st.error("❌ Registration failed. Please try again.")
         st.markdown("----")
-        st.image('static/k4.png', width="stretch")
+        col11, col22, col33 = st.columns([2,2,2])
+        with col22:
+            st.image('static/k4.png', width="stretch")
 def send_email_simplified(registration_data):
     """Simplified email function for new registration form"""
     try:
