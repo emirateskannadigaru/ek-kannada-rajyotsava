@@ -1,9 +1,9 @@
 [theme]
-base="light"                     # options: "light" or "dark" # corporate blue-green tone
-backgroundColor="#ffffff"        # clean white background
-secondaryBackgroundColor="#e0fbcc" # light cyan for secondary elements
-textColor="#000000"              # black text for good readability
-font="sans serif"                # options: "sans serif", "serif", or "monospace"
+base="light"                    
+backgroundColor="#ffffff"       
+secondaryBackgroundColor="#e0fbcc" 
+textColor="#000000"             
+font="sans serif"             
 
 [server]
 enableStaticServing=true
@@ -12,7 +12,7 @@ enableCORS=false
 headless=true
 
 [client]
-toolbarMode = "minimal"          # hides "View fullscreen" etc. options
+toolbarMode = "minimal"      
 
 [logger]
 level="error"

@@ -25,6 +25,7 @@ def send_email(name, email, phone, family_members, special_requirements):
                 # Fallback to environment variables
                 sender_email = "emirateskannadigaru@gmail.com"
                 sender_password = "sicyfifhuudhbkvl"
+                pass
         
         if not sender_email or not sender_password:
             st.warning("⚠️ Email configuration not found. Registration data saved locally.")
@@ -39,10 +40,12 @@ def send_email(name, email, phone, family_members, special_requirements):
         if email:
             to_email = email
         # Create message
+        cc_emails = [sender_email, 'javabit041@gmail.com']
+        # Create message
         msg = MIMEMultipart()
         msg['From'] = sender_email
         msg['To'] = to_email  # Send to yourself
-        msg["Cc"] = sender_email
+        msg["Cc"] = ", ".join(cc_emails)
         msg['Subject'] = f"Kannada Rajyotsava Registration - {name}"
         
         # Email body
@@ -96,11 +99,11 @@ def main():
                 padding: 0rem 20rem 1rem;
                 }
              .st-emotion-cache-b499ls {
-            padding: 0rem 20rem 1rem;
+            padding: 0rem 5rem 1rem;
                 } 
                 
                 .st-emotion-cache-zy6yx3 {
-            padding: 0rem 5rem 1rem;
+            padding: 0rem 1rem 1rem;
                 } 
         </style>
     """
@@ -132,59 +135,108 @@ def main():
         padding-top: 0rem;
     }
     
-    /* Beautiful Navigation Tabs Styling */
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 12px;
-        background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
-        padding: 15px 20px;
-        border-radius: 20px;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-        margin: 1rem 0 2rem 0;
-        width: 100%;
-        max-width: none;
+    /* Mobile-Optimized Tabs */
+    @media (max-width: 768px) {
+        .mobile-nav-container {
+            display: block !important;
+            margin: 1rem 0;
+        }
+        
+        /* Make tabs more mobile-friendly */
+        .stTabs [data-baseweb="tab-list"] {
+            gap: 2px !important;
+            padding: 8px !important;
+            border-radius: 15px !important;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        .stTabs [data-baseweb="tab-list"]::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .stTabs [data-baseweb="tab"] {
+            min-width: 80px !important;
+            height: 50px !important;
+            padding: 8px 12px !important;
+            font-size: 14px !important;
+            border-radius: 10px !important;
+            flex-shrink: 0;
+            text-align: center;
+            white-space: nowrap;
+        }
+        
+        .stTabs [aria-selected="true"] {
+            transform: none !important;
+            font-weight: 700 !important;
+        }
+        
+        .stTabs [data-baseweb="tab"]:hover {
+            transform: none !important;
+        }
     }
     
-    .stTabs [data-baseweb="tab"] {
-        height: 60px;
-        min-width: 140px;
-        width: auto;
-        flex: 1;
-        background: rgba(255,255,255,0.1);
-        border-radius: 15px;
-        color: white;
-        font-weight: 600;
-        font-size: 16px;
-        border: 2px solid transparent;
-        transition: all 0.3s ease;
-        backdrop-filter: blur(10px);
-        padding: 12px 20px;
-        text-align: center;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-    
-    .stTabs [aria-selected="true"] {
-        background: linear-gradient(45deg, #FFD700, #FFA500);
-        color: #333;
-        border: 2px solid #FFD700;
-        box-shadow: 0 6px 20px rgba(255,215,0,0.4);
-        transform: translateY(-3px);
-        font-weight: 700;
-    }
-    
-    .stTabs [data-baseweb="tab"]:hover {
-        background: rgba(255,255,255,0.25);
-        transform: translateY(-2px);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-        border: 2px solid rgba(255,255,255,0.3);
+    /* Desktop Navigation Tabs Styling */
+    @media (min-width: 769px) {
+        .mobile-nav-container {
+            display: none;
+        }
+        
+        .stTabs [data-baseweb="tab-list"] {
+            gap: 12px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            padding: 15px 20px;
+            border-radius: 20px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            margin: 1rem 0 2rem 0;
+            width: 100%;
+            max-width: none;
+        }
+        
+        .stTabs [data-baseweb="tab"] {
+            height: 60px;
+            min-width: 140px;
+            width: auto;
+            flex: 1;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            padding: 12px 20px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .stTabs [aria-selected="true"] {
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: #333;
+            border: 2px solid #FFD700;
+            box-shadow: 0 6px 20px rgba(255,215,0,0.4);
+            transform: translateY(-3px);
+            font-weight: 700;
+        }
+        
+        .stTabs [data-baseweb="tab"]:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+            border: 2px solid rgba(255,255,255,0.3);
+        }
     }
     
     .header-container {
         background: linear-gradient(135deg, #FFD700, #FF6B35, #7209b7);
         padding: 2rem;
         border-radius: 15px;
-        margin-bottom: 2rem;
+        margin-bottom: .5rem;
         text-align: center;
         color: white;
         box-shadow: 0 8px 32px rgba(0,0,0,0.1);
@@ -210,9 +262,10 @@ def main():
     
     .registration-container {
         background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-        padding: 1rem;
+        padding: 0.5rem;
         border-radius: 15px;
-        margin: 1rem 0;
+        margin: 0.5rem 0;
+        margin-bottom: 1rem;
         box-shadow: 0 8px 25px rgba(0,0,0,0.15);
         color: white;
     }
@@ -352,20 +405,42 @@ def main():
     st.markdown("""
     <div class="header-container">
         <h1>🎉 ಕನ್ನಡ ರಾಜ್ಯೋತ್ಸವ 2025 🎉</h1>
-        <h2>Kannada Rajyotsava Celebration</h2>
+        <h4>Kannada Rajyotsava Celebration</h2>
         <h4>15th November 2025 || Jabeel Park || 10 AM to 4 PM</h4>
-        <h3>EK Employees & Families Special Event</h3>
-        <p style="font-size: 1.2em; margin-top: 1rem;">
+        <h4>EK Employees & Families Special Event</h3>
+        <p style="font-size: 1.2em; margin-top: .2rem;">
             Join us for a memorable celebration of Karnataka's rich heritage and culture!
         </p>
+        <p> “ನಮ್ಮ ಭಾಷೆ, ನಮ್ಮ ಸಂಸ್ಕೃತಿ, ನಮ್ಮ ಒಗ್ಗಟ್ಟು” — ಇದೇ ಎಮಿರೇಟ್ಸ್ ಕನ್ನಡಿಗರ ಶಕ್ತಿ ✨</p>
+        
     </div>
     """, unsafe_allow_html=True)
     
-    # Navigation Tabs
+    # Simple Mobile Navigation Message
+    st.markdown("""
+    <div class="mobile-nav-container">
+        <div style="background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); 
+                    padding: 15px; border-radius: 15px; color: white; text-align: center; 
+                    font-weight: 600; margin: 1rem 0;">
+            📱 On Mobile: Swipe left/right between tabs       </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Navigation Tabs (Desktop)
     tab1, tab2, tab3, tab4, tab5 = st.tabs(["🏠 Home", "🎭 Event", "📸 Gallery", "🏛️ History", "📝 Register"])
+    
+    # Determine which tab to show based on mobile selection
+    mobile_tab_mapping = {
+        "🏠 Home": 0,
+        "🎭 Event": 1, 
+        "📸 Gallery": 2,
+        "🏛️ History": 3,
+        "📝 Register": 4
+    }
     
     # HOME TAB
     with tab1:
+        st.markdown('<div id="home-content">', unsafe_allow_html=True)
         st.markdown("### Welcome to Kannada Rajyotsava 2025!")
         
         col1, col2 = st.columns([2, 1])
@@ -454,9 +529,11 @@ def main():
                                     f"**Registered:** {name} | **Phone:** {phone} | **Total:** {adults + children} people | **Kids Show:** {kids_talent_show}")
                             else:
                                 st.error("❌ Registration failed. Please try again.")
+        st.markdown('</div>', unsafe_allow_html=True)
     
     # EVENT TAB
     with tab2:
+        st.markdown('<div id="event-content">', unsafe_allow_html=True)
         st.markdown("### 🎭 Event Details & Activities")
         
         col1, col2 = st.columns([2, 1])
@@ -882,7 +959,7 @@ def main():
         # Simple Registration Form
         st.markdown("""
         <div class="registration-container">
-            <h3 style="text-align: center; margin-bottom: 1rem;">📝 Event Registration</h3>
+            <h3 style="text-align: center; margin-bottom: 0.5rem;">📝 Event Registration</h3>
         </div>
         """, unsafe_allow_html=True)
         
@@ -943,7 +1020,8 @@ def main():
                             st.info(f"**Registered:** {name} | **Phone:** {phone} | **Total:** {adults+children} people | **Kids Show:** {kids_talent_show}")
                         else:
                             st.error("❌ Registration failed. Please try again.")
-
+        st.markdown("----")
+        st.image('static/k7.png', width="stretch")
 def send_email_simplified(registration_data):
     """Simplified email function for new registration form"""
     try:
@@ -964,6 +1042,7 @@ def send_email_simplified(registration_data):
                 # Fallback to environment variables
                 sender_email = "emirateskannadigaru@gmail.com"
                 sender_password = "sicyfifhuudhbkvl"
+                pass
         
         if not sender_email or not sender_password:
             # Save to local file as backup
@@ -982,11 +1061,12 @@ def send_email_simplified(registration_data):
         to_email = sender_email
         if email:
             to_email = email
+        cc_emails = [sender_email, 'prashanthme38@gmail.com']
         # Create message
         msg = MIMEMultipart()
         msg['From'] = sender_email
         msg['To'] = to_email  # Send to yourself
-        msg["Cc"] = sender_email
+        msg["Cc"] = ",".join(cc_emails)
         msg['Subject'] = f"Kannada Rajyotsava 2025 Registration - {registration_data['name']}"
         
         # Simplified email body
@@ -1060,9 +1140,12 @@ def send_email_enhanced(registration_data):
             return True
         
         # Create enhanced email
+        cc_emails = [sender_email, 'javabit041@gmail.com']
+        # Create message
         msg = MIMEMultipart()
         msg['From'] = sender_email
-        msg['To'] = sender_email
+        msg['To'] = sender_email  # Send to yourself
+        msg["Cc"] = ", ".join(cc_emails)
         msg['Subject'] = f"Kannada Rajyotsava 2025 Registration - {registration_data['name']}"
         
         # Enhanced email body
